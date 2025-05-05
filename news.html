@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NGMT News Digest</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🧬 NGMT News Digest</h1>
+        <form action="/get_news" method="post">
+            <div class="selectors">
+                <select name="category">
+                    {% for cat in categories %}
+                        <option value="{{ cat }}" {% if cat == selected_category %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+
+                <select name="filter_type">
+                    {% for f in filters %}
+                        <option value="{{ f }}" {% if f == selected_filter %}selected{% endif %}>{{ f }}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit">🔍 Show News</button>
+            </div>
+        </form>
+
+        <div class="news-grid">
+            {% for article in articles %}
+                <div class="card">
+                    <img src="{{ article.urlToImage or 'https://via.placeholder.com/300x150' }}" alt="News image">
+                    <h3>{{ article.title }}</h3>
+                    <p>{{ article.description }}</p>
+                    <a href="{{ article.url }}" target="_blank">Read more</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button id="backToTop" title="Back to top">↑</button>
+    <script src="/static/script.js"></script>    
+
+</body>
+</html>
